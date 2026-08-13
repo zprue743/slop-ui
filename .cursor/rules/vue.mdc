@@ -1,0 +1,10 @@
+---
+description: Vue components, composables, and playground code
+globs: ["**/*.vue", "packages/vue/**/*.ts", "apps/playground/**/*.ts"]
+alwaysApply: false
+---
+
+Follow `docs/standards/vue.md`. Use idiomatic Vue 3, explicit public contracts,
+computed state before watchers, deterministic cleanup, and practical SSR safety.
+Do not mutate consumer objects or recreate a framework inside Vue.
+

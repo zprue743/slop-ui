@@ -1,0 +1,10 @@
+---
+description: Semantics, keyboard, focus, and assistive-technology behavior
+globs: ["packages/vue/**/*", "tests/e2e/**/*", "docs/components/**/*"]
+alwaysApply: false
+---
+
+Follow `docs/standards/accessibility.md`. Prefer native semantics and specify
+roles, names, relationships, keyboard behavior, focus, disabled states, and
+announcements before implementation. Automated checks do not prove accessibility.
+

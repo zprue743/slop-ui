@@ -1,0 +1,10 @@
+---
+description: TypeScript source and public type contracts
+globs: ["**/*.ts", "**/*.tsx", "**/*.vue"]
+alwaysApply: false
+---
+
+Follow `docs/standards/typescript.md`. Preserve strictness; avoid `any`, unsafe
+assertions, undocumented non-null assertions, and clever unreadable generics.
+Design exported types deliberately and use `unknown` at unsafe boundaries.
+

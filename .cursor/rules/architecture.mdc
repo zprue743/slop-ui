@@ -1,0 +1,11 @@
+---
+description: Package boundaries and architecture for all repository changes
+alwaysApply: true
+---
+
+Read `AGENTS.md`, `docs/architecture/overview.md`, and the relevant canonical
+standards before editing. Keep simple use simple, configuration behavioral,
+consumer data unowned, headless behavior independent of themes, and dependencies
+within `docs/architecture/package-boundaries.md`. Prefer existing patterns over a
+new parallel architecture.
+

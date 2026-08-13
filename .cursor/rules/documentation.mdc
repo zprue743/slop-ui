@@ -1,0 +1,10 @@
+---
+description: Public and engineering documentation
+globs: ["**/*.md", "docs/.vitepress/**/*"]
+alwaysApply: false
+---
+
+Follow `docs/standards/documentation.md`. Keep canonical rules in `docs/`, avoid
+advertising unimplemented features, document API behavior and edge cases with the
+feature, and run `pnpm docs:build`.
+

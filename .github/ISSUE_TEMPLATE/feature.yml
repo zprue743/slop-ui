@@ -1,0 +1,36 @@
+name: Feature proposal
+description: Propose a user problem and possible public behavior.
+title: '[Proposal]: '
+labels: [proposal]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: Describe the workflow or limitation without assuming an implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: simple-api
+    attributes:
+      label: Simplest useful API
+      description: Show how the ordinary Vue use case could remain simple.
+    validations:
+      required: true
+  - type: textarea
+    id: advanced
+    attributes:
+      label: Advanced requirements and escape hatches
+      description: Describe callbacks, slots, rendering, data access, or lower-level needs.
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Accessibility behavior
+      description: Describe semantics, keyboard, focus, and assistive-technology expectations.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing components, composition, or application-level approaches considered.

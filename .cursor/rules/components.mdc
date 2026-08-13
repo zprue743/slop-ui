@@ -1,0 +1,11 @@
+---
+description: Required design workflow for production UI components
+globs: ["packages/vue/src/**/*.vue", "docs/components/**/*.md"]
+alwaysApply: false
+---
+
+No production component may begin without an approved specification based on
+`docs/components/spec-template.md`. Follow
+`docs/agents/COMPONENT_WORKFLOW.md`; define public behavior, accessibility,
+states, data assumptions, escape hatches, tests, and compatibility first.
+

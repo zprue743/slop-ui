@@ -1,0 +1,9 @@
+---
+description: Intent-focused code comments and public API documentation
+alwaysApply: true
+---
+
+Follow `docs/standards/commenting.md`. Explain non-obvious assumptions,
+invariants, accessibility decisions, cleanup, compatibility, and tradeoffs.
+Never narrate syntax. Public APIs require useful TSDoc.
+

@@ -1,0 +1,10 @@
+---
+description: Unit, Vue, browser, accessibility, and regression tests
+globs: ["**/*.test.ts", "**/*.spec.ts", "tests/**/*"]
+alwaysApply: false
+---
+
+Follow `docs/agents/TESTING_RULES.md`. Test public behavior, add regression cases,
+use Playwright for browser behavior, and treat axe as a supplement to explicit
+accessibility reasoning. Run the relevant focused checks and `pnpm verify`.
+
