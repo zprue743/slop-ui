@@ -1,0 +1,49 @@
+# Repository architecture
+
+The workspace separates publishable responsibilities from development and
+engineering support:
+
+```text
+packages/shared    proven framework-neutral low-level utilities
+packages/core      framework-independent behavior and contracts
+packages/vue       Vue lifecycle, reactivity, composables, and components
+packages/themes    optional theme and design-token infrastructure
+apps/docs          VitePress command wrapper for canonical docs
+apps/playground    manual development and browser-test host
+tests              cross-package integration and browser tests
+docs               canonical product and engineering documentation
+scripts            repository invariants that CI and local checks share
+```
+
+Directories exist only when they serve current tooling or express a real
+boundary. The project avoids speculative base components, managers, registries,
+engines, and empty expansion trees.
+
+## Architectural commitments
+
+Framework-independent code belongs in `core` only when independence is useful in
+practice. Vue lifecycle or effect-scope semantics remain in `vue`; forcing them
+through an abstract core would reduce clarity.
+
+Headless behavior may not depend on `themes`. Consumers remain free to use plain
+CSS, Tailwind, CSS Modules, another design system, or no prebuilt theme.
+
+Public package entry points are intentional contracts. Internal files should be
+imported directly within a package; networks of nested `index.ts` barrels hide
+dependency direction and encourage cycles.
+
+## Tooling choices
+
+Vite builds the Vue library and development apps. TypeScript emits the small
+framework-neutral packages directly. Vitest, Vue Test Utils, Playwright, and axe
+cover complementary test levels. VitePress publishes the same canonical Markdown
+that contributors and agents read.
+
+Storybook is deferred. Before real components exist, it would duplicate the
+playground and documentation responsibilities without providing meaningful
+stories. Reconsider it when component development demonstrates a concrete review
+or visual-regression need.
+
+The repository-owned boundary checker is intentionally smaller than a general
+dependency graph tool. Reconsider dedicated cycle analysis when implementation
+volume makes simple manifest validation insufficient.

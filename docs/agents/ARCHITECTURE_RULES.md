@@ -1,0 +1,21 @@
+# Architecture rules for agents
+
+- Keep ordinary use cases ordinary: no provider, factory, registry, adapter, or
+  configuration object without a demonstrated need.
+- Describe behavior and intent in public configuration; do not expose nested
+  implementation markup as the normal customization mechanism.
+- Preserve consumer-owned objects and support conventional access, nested paths,
+  accessor callbacks, key callbacks, and adapters when the use case demands them.
+- Provide progressive escape hatches: props/configuration, callbacks, slots,
+  custom rendering, then lower-level primitives.
+- Place logic in `core` only when it is useful without Vue. Vue lifecycle and
+  reactivity behavior belongs in `vue`.
+- Keep headless functionality independent of `themes`.
+- Extract shared abstractions from evidence, not speculation.
+- Prefer composition and the canonical existing pattern over duplication.
+- Expose only deliberate package entry points; avoid internal barrel networks.
+- Treat accessibility, TypeScript, documentation, and compatibility as public
+  architecture.
+
+See [the architecture overview](../architecture/overview.md) and
+[package boundaries](../architecture/package-boundaries.md) for rationale.

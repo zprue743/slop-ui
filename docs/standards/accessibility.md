@@ -1,0 +1,25 @@
+# Accessibility standard
+
+Accessibility is architecture, not final QA. A component specification must
+define semantics before implementation:
+
+- native element choice and ARIA roles;
+- accessible names, descriptions, states, and relationships;
+- complete keyboard interaction and key conflict behavior;
+- focus entry, movement, trapping, restoration, and visible indication;
+- disabled and read-only semantics;
+- loading, empty, validation, and async announcements;
+- expected assistive-technology behavior; and
+- touch, zoom, reduced-motion, contrast, and target-size considerations where
+  applicable.
+
+Prefer native HTML semantics. ARIA supplements missing native meaning; it does
+not repair arbitrary markup automatically. Components must remain operable
+without a pointer and should not encode meaning through color alone.
+
+Specs should cite established WAI-ARIA Authoring Practices patterns when a
+matching composite widget exists, while still validating the chosen behavior in
+the product context. Tests should cover keyboard and focus behavior explicitly.
+Automated axe scans are a baseline, not evidence that a component is accessible.
+Meaningful components require manual reasoning and, before stable release,
+assistive-technology review proportionate to their complexity.
