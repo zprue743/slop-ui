@@ -1,0 +1,15 @@
+{
+  "name": "@slop-ui/playground",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --port 4173",
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@slop-ui/vue": "workspace:*",
+    "vue": "3.5.41"
+  }
+}

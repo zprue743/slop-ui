@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+.vitepress/cache/
+.vitepress/dist/
+playwright-report/
+test-results/
+*.tsbuildinfo
+.DS_Store
+*.local
+

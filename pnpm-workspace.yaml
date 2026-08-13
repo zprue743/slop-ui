@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Keep contributor and CI installs aligned with the declared runtime and peer
+# contracts. pnpm 11 reads these project settings from this file, not .npmrc.
+engineStrict: true
+saveExact: true
+strictPeerDependencies: true
+
+# Vite and VitePress require esbuild's platform binary. All other dependency
+# install scripts remain blocked unless reviewed and explicitly added here.
+allowBuilds:
+  esbuild: true

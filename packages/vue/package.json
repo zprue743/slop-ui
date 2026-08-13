@@ -1,0 +1,32 @@
+{
+  "name": "@slop-ui/vue",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Vue 3 integration for the headless-first slop-ui library.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/slop-ui.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vue-tsc -p tsconfig.build.json --emitDeclarationOnly && vite build",
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@slop-ui/core": "workspace:*",
+    "@slop-ui/shared": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "vue": "3.5.41"
+  }
+}
