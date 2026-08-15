@@ -26,6 +26,11 @@ upgrade only the compiler and silently lose type-aware linting.
 - Prefer readable types over deeply recursive or distributive cleverness.
 - Type props, emits, slots, configuration, events, and exposed methods
   intentionally.
+- Make cross-package type relationships explicit. Do not duplicate a contract
+  owned by another package and rely on incidental structural compatibility;
+  import and use the canonical type directly, extend or intersect it when adding
+  fields, or use a named typed adapter when the representations intentionally
+  differ.
 - Preserve consumer types through accessors and configuration where practical.
 - Use type-only imports and exports when a symbol has no runtime role.
 

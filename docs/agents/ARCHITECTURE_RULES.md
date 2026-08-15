@@ -8,8 +8,14 @@
   accessor callbacks, key callbacks, and adapters when the use case demands them.
 - Provide progressive escape hatches: props/configuration, callbacks, slots,
   custom rendering, then lower-level primitives.
-- Place logic in `core` only when it is useful without Vue. Vue lifecycle and
-  reactivity behavior belongs in `vue`.
+- Keep new component behavior in `vue` by default, even when it is pure
+  TypeScript. Move it to `core` only when framework-independent use is
+  demonstrated by a current non-Vue consumer or an approved framework-neutral
+  public contract. Being reusable, independently testable, or free of Vue
+  imports is not sufficient justification.
+- Do not create `core` types or functions solely to parameterize a Vue
+  implementation or anticipate possible future framework adapters. Vue
+  lifecycle and reactivity behavior belongs in `vue`.
 - Keep headless functionality independent of `themes`.
 - Extract shared abstractions from evidence, not speculation.
 - Prefer composition and the canonical existing pattern over duplication.
