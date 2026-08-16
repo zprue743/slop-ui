@@ -1,0 +1,102 @@
+import { mount } from '@vue/test-utils'
+import { h } from 'vue'
+import { renderToString } from 'vue/server-renderer'
+import { describe, expect, it, vi } from 'vitest'
+
+import Button from './Button.vue'
+import type { ButtonExposed } from './Button.types'
+
+describe('Button', () => {
+  it('renders native button semantics and defaults to a non-submitting type', () => {
+    const wrapper = mount(Button, { slots: { default: 'Save' } })
+
+    expect(wrapper.get('button').attributes('type')).toBe('button')
+    expect(wrapper.text()).toBe('Save')
+  })
+
+  it('forwards native attributes and listeners to the button', () => {
+    const onClick = vi.fn()
+    const wrapper = mount(Button, {
+      attrs: {
+        'aria-describedby': 'save-help',
+        class: 'action',
+        onClick,
+      },
+      slots: { default: 'Save' },
+    })
+
+    const button = wrapper.get('button')
+    button.element.click()
+
+    expect(button.attributes('aria-describedby')).toBe('save-help')
+    expect(button.classes()).toContain('action')
+    expect(onClick).toHaveBeenCalledOnce()
+  })
+
+  it.each([
+    { state: 'disabled', props: { disabled: true } },
+    { state: 'loading', props: { loading: true } },
+  ])('prevents activation while $state', ({ state }) => {
+    const onClick = vi.fn()
+    const wrapper = mount(Button, {
+      attrs: { onClick },
+      props: {
+        disabled: state === 'disabled',
+        loading: state === 'loading',
+      },
+      slots: { default: 'Save' },
+    })
+
+    const button = wrapper.get('button')
+    button.element.click()
+
+    expect(button.attributes()).toHaveProperty('disabled')
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
+  it('marks loading state without replacing the accessible content', () => {
+    const wrapper = mount(Button, {
+      props: { loading: true },
+      slots: { default: 'Save changes' },
+    })
+
+    const button = wrapper.get('button')
+    expect(button.attributes('aria-busy')).toBe('true')
+    expect(button.attributes()).toHaveProperty('data-loading')
+    expect(button.text()).toBe('Save changes')
+  })
+
+  it('supports an icon-only accessible name through forwarded attributes', () => {
+    const wrapper = mount(Button, {
+      attrs: { 'aria-label': 'Close dialog' },
+      slots: { default: '<svg aria-hidden="true"></svg>' },
+    })
+
+    expect(wrapper.get('button').attributes('aria-label')).toBe('Close dialog')
+  })
+
+  it('exposes the native element and focus controls', () => {
+    const wrapper = mount(Button, {
+      attachTo: document.body,
+      slots: { default: 'Save' },
+    })
+    const exposed = wrapper.vm as unknown as ButtonExposed
+
+    exposed.focus()
+    expect(exposed.element).toBe(wrapper.get('button').element)
+    expect(document.activeElement).toBe(exposed.element)
+
+    exposed.blur()
+    expect(document.activeElement).not.toBe(exposed.element)
+    wrapper.unmount()
+  })
+
+  it('renders deterministic native markup during SSR', async () => {
+    const html = await renderToString(
+      h(Button, { disabled: true, type: 'submit' }),
+    )
+
+    expect(html).toContain('<button type="submit" disabled>')
+    expect(html).not.toContain('aria-busy')
+  })
+})

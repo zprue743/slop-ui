@@ -21,6 +21,10 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Components',
+        items: [{ text: 'Button', link: '/components/button' }],
+      },
+      {
         text: 'Architecture',
         items: [
           { text: 'Overview', link: '/architecture/overview' },
@@ -52,6 +56,10 @@ export default defineConfig({
           { text: 'Workflow', link: '/contributing/workflow' },
           { text: 'Releases', link: '/contributing/releases' },
           { text: 'Component specs', link: '/components/spec-template' },
+          {
+            text: 'Button specification',
+            link: '/components/button-spec',
+          },
           { text: 'ADRs', link: '/adr/' },
         ],
       },
