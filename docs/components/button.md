@@ -74,13 +74,14 @@ assistive technology.
 
 ```vue
 <Button data-icon-only aria-label="Close dialog">
-  <CloseIcon aria-hidden="true" />
+  <CloseIcon data-slot="icon" aria-hidden="true" />
 </Button>
 ```
 
 Text buttons normally receive their accessible name from the slot. You can also
 forward `aria-labelledby` or `aria-describedby` when the surrounding interface
-provides those relationships.
+provides those relationships. The optional theme sizes only content marked with
+`data-slot="icon"`, so wrapped icon components remain under consumer control.
 
 ## Component refs
 

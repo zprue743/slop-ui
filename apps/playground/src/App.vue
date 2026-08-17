@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { Button } from '@slop-ui/vue'
 
 const activations = ref(0)
+const submissions = ref(0)
 </script>
 
 <template>
@@ -22,19 +23,52 @@ const activations = ref(0)
               Disabled action
             </Button>
           </div>
+          <form class="form-example" @submit.prevent="submissions += 1">
+            <span>Form submissions: {{ submissions }}</span>
+            <div class="examples">
+              <Button>Default form action</Button>
+              <Button type="submit">Submit form</Button>
+            </div>
+          </form>
         </fieldset>
 
-        <fieldset class="slop-theme">
+        <fieldset class="slop-theme" data-color-scheme="light">
           <legend>Default theme</legend>
           <p>The same component with the optional theme enabled.</p>
           <div class="examples">
             <div class="example">
               <span>Icon with text</span>
               <Button @click="activations += 1">
-                <svg aria-hidden="true" viewBox="0 0 16 16">
+                <svg data-slot="icon" aria-hidden="true" viewBox="0 0 16 16">
                   <path d="M8 3v10M3 8h10" stroke="currentColor" />
                 </svg>
                 Add item
+              </Button>
+            </div>
+            <div class="example">
+              <span>Secondary</span>
+              <Button
+                data-variant="secondary"
+                data-size="sm"
+                @click="activations += 1"
+              >
+                Secondary action
+              </Button>
+            </div>
+            <div class="example">
+              <span>Outline</span>
+              <Button data-variant="outline" @click="activations += 1">
+                Outline action
+              </Button>
+            </div>
+            <div class="example">
+              <span>Danger</span>
+              <Button
+                data-variant="danger"
+                data-size="lg"
+                @click="activations += 1"
+              >
+                Delete item
               </Button>
             </div>
             <div class="example">
@@ -50,9 +84,19 @@ const activations = ref(0)
                 aria-label="Close playground"
                 @click="activations += 1"
               >
-                <svg aria-hidden="true" viewBox="0 0 16 16">
+                <svg data-slot="icon" aria-hidden="true" viewBox="0 0 16 16">
                   <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" />
                 </svg>
+              </Button>
+            </div>
+            <div class="example block-example">
+              <span>Consumer override</span>
+              <Button
+                class="product-button"
+                data-block
+                @click="activations += 1"
+              >
+                Product action
               </Button>
             </div>
           </div>
@@ -84,10 +128,20 @@ fieldset {
   gap: 0.75rem;
 }
 
+.form-example {
+  display: grid;
+  gap: 0.5rem;
+  margin-block-start: 1rem;
+}
+
 .example {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+}
+
+.block-example {
+  flex: 1 1 100%;
 }
 </style>

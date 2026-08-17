@@ -1,76 +1,289 @@
 /*
- * The wrapper keeps the optional theme from changing headless components unless
- * a consumer opts in. Component-scoped tokens avoid committing to a broader
- * visual taxonomy before more components provide evidence for one.
+ * Theme defaults live in a low-priority layer so ordinary consumer styles win
+ * regardless of import order. Component-scoped tokens remain the preferred
+ * override surface until multiple components justify shared visual tokens.
  */
-:where(.slop-theme) {
-  --slop-button-background: #1d4ed8;
-  --slop-button-background-hover: #1e40af;
-  --slop-button-background-active: #1e3a8a;
-  --slop-button-border-color: #1d4ed8;
-  --slop-button-color: #ffffff;
-  --slop-button-focus-ring: #f59e0b;
-  --slop-button-radius: 0.5rem;
-  --slop-button-min-size: 2.75rem;
-}
+@layer slop-ui-theme {
+  :where(.slop-theme) {
+    color-scheme: light;
 
-:where(.slop-theme) .slop-button {
-  align-items: center;
-  appearance: none;
-  background: var(--slop-button-background);
-  border: 1px solid var(--slop-button-border-color);
-  border-radius: var(--slop-button-radius);
-  color: var(--slop-button-color);
-  cursor: pointer;
-  display: inline-flex;
-  font: inherit;
-  font-weight: 600;
-  gap: 0.5rem;
-  justify-content: center;
-  line-height: 1;
-  min-block-size: var(--slop-button-min-size);
-  padding: 0.75rem 1rem;
-  transition:
-    background-color 120ms ease,
-    border-color 120ms ease,
-    opacity 120ms ease;
-}
+    --slop-button-primary-background: #1d4ed8;
+    --slop-button-primary-background-hover: #1e40af;
+    --slop-button-primary-background-active: #1e3a8a;
+    --slop-button-primary-border-color: #1d4ed8;
+    --slop-button-primary-color: #ffffff;
+    --slop-button-secondary-background: #f8fafc;
+    --slop-button-secondary-background-hover: #f1f5f9;
+    --slop-button-secondary-background-active: #e2e8f0;
+    --slop-button-secondary-border-color: #cbd5e1;
+    --slop-button-secondary-color: #0f172a;
+    --slop-button-outline-background: transparent;
+    --slop-button-outline-background-hover: #eff6ff;
+    --slop-button-outline-background-active: #dbeafe;
+    --slop-button-outline-border-color: #1d4ed8;
+    --slop-button-outline-color: #1d4ed8;
+    --slop-button-ghost-background: transparent;
+    --slop-button-ghost-background-hover: #f1f5f9;
+    --slop-button-ghost-background-active: #e2e8f0;
+    --slop-button-ghost-border-color: transparent;
+    --slop-button-ghost-color: #0f172a;
+    --slop-button-danger-background: #b91c1c;
+    --slop-button-danger-background-hover: #991b1b;
+    --slop-button-danger-background-active: #7f1d1d;
+    --slop-button-danger-border-color: #b91c1c;
+    --slop-button-danger-color: #ffffff;
+    --slop-button-disabled-opacity: 0.55;
+    --slop-button-focus-ring: #0f172a;
+    --slop-button-focus-ring-contrast: #ffffff;
+    --slop-button-focus-ring-offset: 2px;
+    --slop-button-focus-ring-width: 3px;
+    --slop-button-font-weight: 600;
+    --slop-button-gap: 0.5rem;
+    --slop-button-icon-size: 1.1em;
+    --slop-button-radius: 0.5rem;
+    --slop-button-transition-duration: 120ms;
+    --slop-button-size-sm-min-size: 2.25rem;
+    --slop-button-size-sm-padding-block: 0.5rem;
+    --slop-button-size-sm-padding-inline: 0.75rem;
+    --slop-button-size-md-min-size: 2.75rem;
+    --slop-button-size-md-padding-block: 0.75rem;
+    --slop-button-size-md-padding-inline: 1rem;
+    --slop-button-size-lg-min-size: 3.25rem;
+    --slop-button-size-lg-padding-block: 0.875rem;
+    --slop-button-size-lg-padding-inline: 1.25rem;
+  }
 
-:where(.slop-theme) .slop-button:hover:not(:disabled) {
-  background: var(--slop-button-background-hover);
-}
+  :where(.slop-theme[data-color-scheme='dark']) {
+    color-scheme: dark;
 
-:where(.slop-theme) .slop-button:active:not(:disabled) {
-  background: var(--slop-button-background-active);
-}
+    --slop-button-primary-background: #3b82f6;
+    --slop-button-primary-background-hover: #2563eb;
+    --slop-button-primary-background-active: #1d4ed8;
+    --slop-button-primary-border-color: #3b82f6;
+    --slop-button-secondary-background: #1e293b;
+    --slop-button-secondary-background-hover: #334155;
+    --slop-button-secondary-background-active: #475569;
+    --slop-button-secondary-border-color: #475569;
+    --slop-button-secondary-color: #f8fafc;
+    --slop-button-outline-background-hover: #172554;
+    --slop-button-outline-background-active: #1e3a8a;
+    --slop-button-outline-border-color: #60a5fa;
+    --slop-button-outline-color: #bfdbfe;
+    --slop-button-ghost-background-hover: #1e293b;
+    --slop-button-ghost-background-active: #334155;
+    --slop-button-ghost-color: #f8fafc;
+    --slop-button-focus-ring: #ffffff;
+    --slop-button-focus-ring-contrast: #0f172a;
+  }
 
-:where(.slop-theme) .slop-button:focus-visible {
-  outline: 3px solid var(--slop-button-focus-ring);
-  outline-offset: 2px;
-}
+  :where(.slop-theme .slop-button) {
+    --_slop-button-background: var(--slop-button-primary-background);
+    --_slop-button-background-active: var(
+      --slop-button-primary-background-active
+    );
+    --_slop-button-background-hover: var(
+      --slop-button-primary-background-hover
+    );
+    --_slop-button-border-color: var(--slop-button-primary-border-color);
+    --_slop-button-color: var(--slop-button-primary-color);
+    --_slop-button-min-size: var(--slop-button-size-md-min-size);
+    --_slop-button-padding-block: var(--slop-button-size-md-padding-block);
+    --_slop-button-padding-inline: var(--slop-button-size-md-padding-inline);
 
-:where(.slop-theme) .slop-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
-}
+    align-items: center;
+    appearance: none;
+    background-color: var(--_slop-button-background);
+    border: 1px solid var(--_slop-button-border-color);
+    border-radius: var(--slop-button-radius);
+    box-sizing: border-box;
+    color: var(--_slop-button-color);
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    font-weight: var(--slop-button-font-weight);
+    gap: var(--slop-button-gap);
+    justify-content: center;
+    line-height: 1.2;
+    min-block-size: var(--_slop-button-min-size);
+    padding-block: var(--_slop-button-padding-block);
+    padding-inline: var(--_slop-button-padding-inline);
+    transition:
+      background-color var(--slop-button-transition-duration) ease,
+      border-color var(--slop-button-transition-duration) ease,
+      color var(--slop-button-transition-duration) ease,
+      opacity var(--slop-button-transition-duration) ease;
+  }
 
-:where(.slop-theme) .slop-button[data-loading] {
-  cursor: wait;
-}
+  :where(.slop-theme .slop-button[data-variant='secondary']) {
+    --_slop-button-background: var(--slop-button-secondary-background);
+    --_slop-button-background-active: var(
+      --slop-button-secondary-background-active
+    );
+    --_slop-button-background-hover: var(
+      --slop-button-secondary-background-hover
+    );
+    --_slop-button-border-color: var(--slop-button-secondary-border-color);
+    --_slop-button-color: var(--slop-button-secondary-color);
+  }
 
-:where(.slop-theme) .slop-button[data-icon-only] {
-  inline-size: var(--slop-button-min-size);
-  padding: 0;
-}
+  :where(.slop-theme .slop-button[data-variant='outline']) {
+    --_slop-button-background: var(--slop-button-outline-background);
+    --_slop-button-background-active: var(
+      --slop-button-outline-background-active
+    );
+    --_slop-button-background-hover: var(
+      --slop-button-outline-background-hover
+    );
+    --_slop-button-border-color: var(--slop-button-outline-border-color);
+    --_slop-button-color: var(--slop-button-outline-color);
+  }
 
-:where(.slop-theme) .slop-button > svg {
-  block-size: 1.1em;
-  flex: none;
-  inline-size: 1.1em;
-}
+  :where(.slop-theme .slop-button[data-variant='ghost']) {
+    --_slop-button-background: var(--slop-button-ghost-background);
+    --_slop-button-background-active: var(
+      --slop-button-ghost-background-active
+    );
+    --_slop-button-background-hover: var(--slop-button-ghost-background-hover);
+    --_slop-button-border-color: var(--slop-button-ghost-border-color);
+    --_slop-button-color: var(--slop-button-ghost-color);
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  :where(.slop-theme) .slop-button {
-    transition: none;
+  :where(.slop-theme .slop-button[data-variant='danger']) {
+    --_slop-button-background: var(--slop-button-danger-background);
+    --_slop-button-background-active: var(
+      --slop-button-danger-background-active
+    );
+    --_slop-button-background-hover: var(--slop-button-danger-background-hover);
+    --_slop-button-border-color: var(--slop-button-danger-border-color);
+    --_slop-button-color: var(--slop-button-danger-color);
+  }
+
+  :where(.slop-theme .slop-button[data-size='sm']) {
+    --_slop-button-min-size: var(--slop-button-size-sm-min-size);
+    --_slop-button-padding-block: var(--slop-button-size-sm-padding-block);
+    --_slop-button-padding-inline: var(--slop-button-size-sm-padding-inline);
+  }
+
+  :where(.slop-theme .slop-button[data-size='lg']) {
+    --_slop-button-min-size: var(--slop-button-size-lg-min-size);
+    --_slop-button-padding-block: var(--slop-button-size-lg-padding-block);
+    --_slop-button-padding-inline: var(--slop-button-size-lg-padding-inline);
+  }
+
+  :where(.slop-theme .slop-button:hover:not(:disabled)) {
+    background-color: var(--_slop-button-background-hover);
+  }
+
+  :where(.slop-theme .slop-button:active:not(:disabled)) {
+    background-color: var(--_slop-button-background-active);
+  }
+
+  :where(.slop-theme .slop-button:focus-visible) {
+    box-shadow: 0 0 0 var(--slop-button-focus-ring-offset)
+      var(--slop-button-focus-ring-contrast);
+    outline: var(--slop-button-focus-ring-width) solid
+      var(--slop-button-focus-ring);
+    outline-offset: var(--slop-button-focus-ring-offset);
+  }
+
+  :where(.slop-theme .slop-button:disabled) {
+    cursor: not-allowed;
+    opacity: var(--slop-button-disabled-opacity);
+  }
+
+  :where(.slop-theme .slop-button[data-loading]) {
+    cursor: wait;
+  }
+
+  :where(.slop-theme .slop-button[data-loading])::before {
+    animation: slop-button-spin 800ms linear infinite;
+    block-size: var(--slop-button-icon-size);
+    border: 2px solid currentColor;
+    border-inline-end-color: transparent;
+    border-radius: 50%;
+    box-sizing: border-box;
+    content: '';
+    flex: none;
+    inline-size: var(--slop-button-icon-size);
+  }
+
+  :where(.slop-theme .slop-button[data-block]) {
+    inline-size: 100%;
+  }
+
+  :where(.slop-theme .slop-button[data-icon-only]) {
+    inline-size: var(--_slop-button-min-size);
+    padding: 0;
+  }
+
+  :where(.slop-theme .slop-button [data-slot='icon']) {
+    block-size: var(--slop-button-icon-size);
+    flex: none;
+    inline-size: var(--slop-button-icon-size);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :where(.slop-theme[data-color-scheme='system']) {
+      color-scheme: dark;
+
+      --slop-button-primary-background: #3b82f6;
+      --slop-button-primary-background-hover: #2563eb;
+      --slop-button-primary-background-active: #1d4ed8;
+      --slop-button-primary-border-color: #3b82f6;
+      --slop-button-secondary-background: #1e293b;
+      --slop-button-secondary-background-hover: #334155;
+      --slop-button-secondary-background-active: #475569;
+      --slop-button-secondary-border-color: #475569;
+      --slop-button-secondary-color: #f8fafc;
+      --slop-button-outline-background-hover: #172554;
+      --slop-button-outline-background-active: #1e3a8a;
+      --slop-button-outline-border-color: #60a5fa;
+      --slop-button-outline-color: #bfdbfe;
+      --slop-button-ghost-background-hover: #1e293b;
+      --slop-button-ghost-background-active: #334155;
+      --slop-button-ghost-color: #f8fafc;
+      --slop-button-focus-ring: #ffffff;
+      --slop-button-focus-ring-contrast: #0f172a;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.slop-theme .slop-button) {
+      transition: none;
+    }
+
+    :where(.slop-theme .slop-button[data-loading])::before {
+      animation: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.slop-theme .slop-button) {
+      background-color: ButtonFace;
+      border-color: ButtonText;
+      color: ButtonText;
+    }
+
+    :where(.slop-theme .slop-button:disabled) {
+      border-color: GrayText;
+      color: GrayText;
+      opacity: 1;
+    }
+
+    :where(.slop-theme .slop-button:focus-visible) {
+      box-shadow: none;
+      outline-color: Highlight;
+    }
+
+    :where(.slop-theme .slop-button[data-loading])::before {
+      border-color: ButtonText;
+      border-inline-end-color: transparent;
+    }
+  }
+
+  @keyframes slop-button-spin {
+    to {
+      transform: rotate(1turn);
+    }
   }
 }

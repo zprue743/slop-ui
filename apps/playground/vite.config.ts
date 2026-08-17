@@ -8,6 +8,9 @@ export default defineConfig({
     // The playground exercises the current source during development and e2e
     // builds instead of depending on a previously generated package artifact.
     alias: {
+      '@slop-ui/themes/default.css': fileURLToPath(
+        new URL('../../packages/themes/src/default.css', import.meta.url),
+      ),
       '@slop-ui/vue': fileURLToPath(
         new URL('../../packages/vue/src/index.ts', import.meta.url),
       ),

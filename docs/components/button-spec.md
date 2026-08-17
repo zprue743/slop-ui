@@ -107,7 +107,10 @@ The default slot and fallthrough attributes are the customization API. The
 component ships no wrapper or visual styles. `slop-button` is the stable component
 class, and `data-loading` is a stable state hook. The optional default theme only
 applies styles when an ancestor has the `slop-theme` class. Consumers may add the
-`data-icon-only` attribute to opt into the theme's square icon-button treatment.
+`data-icon-only` attribute to opt into the theme's square icon-button treatment
+and mark icon content with `data-slot="icon"`. Visual variants, sizes, block
+layout, and color schemes are optional theme `data-*` hooks rather than component
+props, preserving the headless API.
 
 ## Environment behavior
 
