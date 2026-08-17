@@ -1,8 +1,10 @@
 # Agent entry point
 
 This repository is a Vue-first, headless-first UI library built primarily with
-AI assistance and reviewed by experienced engineers. During the foundation
-phase, do not add production UI components.
+AI assistance and reviewed by experienced engineers. Production component work
+requires a reviewed specification first; see
+[ADR 0001](./docs/adr/0001-begin-component-implementation.md) for why the
+foundation-phase moratorium ended and what replaced it.
 
 ## Read before editing
 
