@@ -28,6 +28,7 @@ defineExpose<ButtonExposed>({
 <template>
   <button
     ref="element"
+    class="slop-button"
     :type="type"
     :disabled="isDisabled"
     :aria-busy="loading || undefined"

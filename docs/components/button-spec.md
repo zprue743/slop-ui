@@ -11,7 +11,7 @@ safe defaults, pending-action behavior, and the public Vue ref contract.
 ## Non-goals
 
 - Styling, variants, sizes, icons, and target-size enforcement belong to the
-  consuming design system or a future optional theme package.
+  consuming design system or the optional theme package.
 - Toggle, menu, link, and composite-widget behavior are separate primitives.
 - `Button` does not start, cancel, or announce the result of asynchronous work.
 
@@ -104,8 +104,10 @@ outcome and suitable announcement text belong to the consuming workflow.
 ## Rendering and customization
 
 The default slot and fallthrough attributes are the customization API. The
-component ships no wrapper or visual styles. `data-loading` is a stable semantic
-styling hook while the action is pending.
+component ships no wrapper or visual styles. `slop-button` is the stable component
+class, and `data-loading` is a stable state hook. The optional default theme only
+applies styles when an ancestor has the `slop-theme` class. Consumers may add the
+`data-icon-only` attribute to opt into the theme's square icon-button treatment.
 
 ## Environment behavior
 
@@ -150,9 +152,10 @@ keyboard, and SSR guidance. Keep equivalent examples in the playground.
 ## Compatibility and release impact
 
 This is the first public component export from `@slop-ui/vue`, so it is additive
-and requires a minor Changeset. Future changes to event timing, native semantics,
-loading behavior, exposed refs, or semantic attributes require compatibility
-review.
+and requires a minor Changeset. The stable styling hooks and optional theme are
+also additive public contracts. Future changes to event timing, native semantics,
+loading behavior, exposed refs, semantic attributes, or styling hooks require
+compatibility review.
 
 ## Open architectural questions
 

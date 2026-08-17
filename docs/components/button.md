@@ -34,6 +34,27 @@ native behavior is intended.
 All native button attributes and event listeners fall through to the root
 button. The default slot is the only content slot.
 
+## Optional default theme
+
+The component remains unstyled until the optional theme stylesheet and wrapper
+are both present:
+
+```ts
+import '@slop-ui/themes/default.css'
+```
+
+```vue
+<template>
+  <div class="slop-theme">
+    <Button>Styled action</Button>
+  </div>
+</template>
+```
+
+The wrapper makes theming local: a `Button` outside `.slop-theme` remains
+headless even when the stylesheet is loaded. See the
+[default theme guide](../themes/default.md) for tokens and overrides.
+
 ## Loading and disabled actions
 
 ```vue
@@ -52,7 +73,7 @@ Icon-only buttons require an accessible name. Hide decorative icon content from
 assistive technology.
 
 ```vue
-<Button aria-label="Close dialog">
+<Button data-icon-only aria-label="Close dialog">
   <CloseIcon aria-hidden="true" />
 </Button>
 ```
@@ -85,11 +106,12 @@ unmount, `element` is `null` and the methods are safe no-ops.
 
 ## Accessibility and environment behavior
 
-The component always renders a native `<button>`, so enabled buttons retain
+The component always renders a native `<button>` with the stable `slop-button`
+class, so enabled buttons retain
 native `Enter`, `Space`, pointer, touch, and focus behavior. Disabled and loading
-buttons use native disabled semantics. The library is unstyled; consumers must
-provide visible focus indication, sufficient contrast, and an adequate touch
-target.
+buttons use native disabled semantics. Without the optional default theme,
+consumers must provide visible focus indication, sufficient contrast, and an
+adequate touch target.
 
 SSR markup is deterministic from props and slot content, and setup does not read
 browser globals. No listeners, timers, or observers require cleanup.

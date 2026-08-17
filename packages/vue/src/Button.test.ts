@@ -11,6 +11,7 @@ describe('Button', () => {
     const wrapper = mount(Button, { slots: { default: 'Save' } })
 
     expect(wrapper.get('button').attributes('type')).toBe('button')
+    expect(wrapper.get('button').classes()).toContain('slop-button')
     expect(wrapper.text()).toBe('Save')
   })
 
@@ -29,6 +30,7 @@ describe('Button', () => {
     button.element.click()
 
     expect(button.attributes('aria-describedby')).toBe('save-help')
+    expect(button.classes()).toContain('slop-button')
     expect(button.classes()).toContain('action')
     expect(onClick).toHaveBeenCalledOnce()
   })
@@ -96,7 +98,9 @@ describe('Button', () => {
       h(Button, { disabled: true, type: 'submit' }),
     )
 
-    expect(html).toContain('<button type="submit" disabled>')
+    expect(html).toContain('class="slop-button"')
+    expect(html).toContain('type="submit"')
+    expect(html).toContain('disabled')
     expect(html).not.toContain('aria-busy')
   })
 })

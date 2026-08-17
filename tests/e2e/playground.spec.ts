@@ -46,7 +46,17 @@ test('Button supports native activation, focus, and unavailable states', async (
     await expect(loading).toBeDisabled()
     await expect(loading).toHaveAttribute('aria-busy', 'true')
 
-    await page.getByRole('button', { name: 'Close playground' }).click()
+    const themedGroup = page.getByRole('group', { name: 'Default theme' })
+    const themedAction = themedGroup.getByRole('button', { name: 'Add item' })
+    await expect(themedAction).toHaveCSS('background-color', 'rgb(29, 78, 216)')
+    await expect(themedAction.locator('svg')).toBeVisible()
+
+    const iconOnly = themedGroup.getByRole('button', {
+      name: 'Close playground',
+    })
+    await expect(iconOnly).toHaveAttribute('data-icon-only', '')
+
+    await iconOnly.click()
     await expect(page.getByText('Activations: 3')).toBeVisible()
   } finally {
     await playground.close()

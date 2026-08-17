@@ -70,6 +70,9 @@ importers:
 
   apps/playground:
     dependencies:
+      '@slop-ui/themes':
+        specifier: workspace:*
+        version: link:../../packages/themes
       '@slop-ui/vue':
         specifier: workspace:*
         version: link:../../packages/vue

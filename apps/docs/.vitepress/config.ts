@@ -25,6 +25,10 @@ export default defineConfig({
         items: [{ text: 'Button', link: '/components/button' }],
       },
       {
+        text: 'Themes',
+        items: [{ text: 'Default theme', link: '/themes/default' }],
+      },
+      {
         text: 'Architecture',
         items: [
           { text: 'Overview', link: '/architecture/overview' },

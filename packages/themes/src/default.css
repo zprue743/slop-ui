@@ -1,0 +1,76 @@
+/*
+ * The wrapper keeps the optional theme from changing headless components unless
+ * a consumer opts in. Component-scoped tokens avoid committing to a broader
+ * visual taxonomy before more components provide evidence for one.
+ */
+:where(.slop-theme) {
+  --slop-button-background: #1d4ed8;
+  --slop-button-background-hover: #1e40af;
+  --slop-button-background-active: #1e3a8a;
+  --slop-button-border-color: #1d4ed8;
+  --slop-button-color: #ffffff;
+  --slop-button-focus-ring: #f59e0b;
+  --slop-button-radius: 0.5rem;
+  --slop-button-min-size: 2.75rem;
+}
+
+:where(.slop-theme) .slop-button {
+  align-items: center;
+  appearance: none;
+  background: var(--slop-button-background);
+  border: 1px solid var(--slop-button-border-color);
+  border-radius: var(--slop-button-radius);
+  color: var(--slop-button-color);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 600;
+  gap: 0.5rem;
+  justify-content: center;
+  line-height: 1;
+  min-block-size: var(--slop-button-min-size);
+  padding: 0.75rem 1rem;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    opacity 120ms ease;
+}
+
+:where(.slop-theme) .slop-button:hover:not(:disabled) {
+  background: var(--slop-button-background-hover);
+}
+
+:where(.slop-theme) .slop-button:active:not(:disabled) {
+  background: var(--slop-button-background-active);
+}
+
+:where(.slop-theme) .slop-button:focus-visible {
+  outline: 3px solid var(--slop-button-focus-ring);
+  outline-offset: 2px;
+}
+
+:where(.slop-theme) .slop-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+:where(.slop-theme) .slop-button[data-loading] {
+  cursor: wait;
+}
+
+:where(.slop-theme) .slop-button[data-icon-only] {
+  inline-size: var(--slop-button-min-size);
+  padding: 0;
+}
+
+:where(.slop-theme) .slop-button > svg {
+  block-size: 1.1em;
+  flex: none;
+  inline-size: 1.1em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.slop-theme) .slop-button {
+    transition: none;
+  }
+}
