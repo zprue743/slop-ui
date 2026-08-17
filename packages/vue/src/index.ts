@@ -1,5 +1,9 @@
 /**
- * Public Vue package entry point. It deliberately exports no components during
- * the foundation phase; future exports require an approved component spec.
+ * Public Vue package entry point. Every export here is an intentional public
+ * contract; components reach this file only after an approved specification.
  */
-export {}
+export { default as VisuallyHidden } from './VisuallyHidden.vue'
+export type {
+  VisuallyHiddenElement,
+  VisuallyHiddenProps,
+} from './VisuallyHidden.types'

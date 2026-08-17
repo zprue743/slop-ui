@@ -23,5 +23,5 @@ features:
 ---
 
 > [!WARNING]
-> slop-ui is in its foundation phase. It exports no UI components and is not
+> slop-ui is pre-release. Its first components are experimental and it is not
 > ready for production use.
