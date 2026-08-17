@@ -21,6 +21,12 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Components',
+        items: [
+          { text: 'VisuallyHidden', link: '/components/visually-hidden' },
+        ],
+      },
+      {
         text: 'Architecture',
         items: [
           { text: 'Overview', link: '/architecture/overview' },
@@ -52,6 +58,10 @@ export default defineConfig({
           { text: 'Workflow', link: '/contributing/workflow' },
           { text: 'Releases', link: '/contributing/releases' },
           { text: 'Component specs', link: '/components/spec-template' },
+          {
+            text: 'VisuallyHidden specification',
+            link: '/components/visually-hidden-spec',
+          },
           { text: 'ADRs', link: '/adr/' },
         ],
       },
