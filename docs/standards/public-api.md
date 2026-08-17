@@ -23,3 +23,14 @@ even when a prop name is unchanged.
 
 Use one public entry point per package by default. Internal files should not be
 reachable through sprawling barrels or undocumented deep imports.
+
+Public stylesheet subpath exports follow the same release discipline as code
+exports. They must point to artifacts emitted and validated by the package build,
+be included in the published package, and remain independently importable by
+consumers. Do not expose a source stylesheet as a substitute for a missing build
+step.
+
+Documented classes, CSS custom properties, and `data-*` hooks are public styling
+APIs. Name them for stable semantic responsibilities rather than current DOM
+structure, cover their intended use in documentation or consumer fixtures, and
+review changes to them for compatibility.

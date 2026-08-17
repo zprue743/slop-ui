@@ -25,3 +25,17 @@ practical.
 Run `pnpm test` for unit/integration checks and `pnpm test:e2e` for browser checks.
 The normal `pnpm verify` gate excludes browser tests to keep routine local and CI
 feedback fast; CI runs the browser job separately after installing Chromium.
+
+## Optional theme coverage
+
+When a component gains an optional theme, browser tests must demonstrate that:
+
+- headless behavior remains complete without the stylesheet;
+- ordinary consumer CSS overrides theme defaults regardless of import order;
+- focus indication remains visible on supported surfaces and color schemes;
+- explicit light, dark, and system modes behave as documented; and
+- forced-colors and reduced-motion preferences retain meaning and operability.
+
+Prefer computed-style and interaction assertions over screenshots for these
+contracts. Visual regression coverage may supplement them when rendering details
+are themselves part of the supported theme.

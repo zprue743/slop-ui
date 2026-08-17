@@ -23,3 +23,10 @@ the product context. Tests should cover keyboard and focus behavior explicitly.
 Automated axe scans are a baseline, not evidence that a component is accessible.
 Meaningful components require manual reasoning and, before stable release,
 assistive-technology review proportionate to their complexity.
+
+Author-defined focus indicators must remain visibly distinct on every supported
+surface and color scheme. Use at least 3:1 contrast between the indicator and its
+adjacent colors; a two-color indicator is preferred when no single color is
+reliable across those surfaces. Preserve a visible system-color indicator in
+forced-colors mode. Motion used only for visual feedback must respect
+`prefers-reduced-motion` without hiding state or progress information.
