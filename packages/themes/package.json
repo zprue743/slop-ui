@@ -12,13 +12,14 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./default.css": "./dist/default.css"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && node scripts/build-css.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   }
 }

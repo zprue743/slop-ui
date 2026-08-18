@@ -41,6 +41,9 @@ importers:
       jsdom:
         specifier: 30.0.1
         version: 30.0.1
+      lightningcss:
+        specifier: 1.33.0
+        version: 1.33.0
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -70,6 +73,9 @@ importers:
 
   apps/playground:
     dependencies:
+      '@slop-ui/themes':
+        specifier: workspace:*
+        version: link:../../packages/themes
       '@slop-ui/vue':
         specifier: workspace:*
         version: link:../../packages/vue
