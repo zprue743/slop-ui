@@ -24,6 +24,13 @@ Automated axe scans are a baseline, not evidence that a component is accessible.
 Meaningful components require manual reasoning and, before stable release,
 assistive-technology review proportionate to their complexity.
 
+Loading and pending states do not automatically have native disabled semantics.
+For every state that suppresses activation, specify whether the focused element
+remains focusable, how pointer and keyboard activation and native form behavior
+are prevented, and what assistive technology receives. Test the transition into
+that state from an enabled, focused control; testing only its initial static
+markup is insufficient.
+
 Author-defined focus indicators must remain visibly distinct on every supported
 surface and color scheme. Use at least 3:1 contrast between the indicator and its
 adjacent colors; a two-color indicator is preferred when no single color is

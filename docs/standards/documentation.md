@@ -11,6 +11,9 @@ cleanup. Every future public feature should include:
 - migration or deprecation notes for changed contracts.
 
 Examples must represent supported APIs and should not invent features that do not
-exist. Keep canonical engineering guidance in `docs/`; link to it from agent and
-tool integrations rather than copying it. Run `pnpm docs:build` to catch broken
-site configuration and invalid Markdown integration before review.
+exist. Styling documentation must list the complete supported token and hook
+surface, distinguish internal values from public contracts, and use names that
+the released stylesheet actually consumes. Keep canonical engineering guidance
+in `docs/`; link to it from agent and tool integrations rather than copying it.
+Run `pnpm docs:build` to catch broken site configuration and invalid Markdown
+integration before review.

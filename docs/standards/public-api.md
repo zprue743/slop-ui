@@ -34,3 +34,9 @@ Documented classes, CSS custom properties, and `data-*` hooks are public styling
 APIs. Name them for stable semantic responsibilities rather than current DOM
 structure, cover their intended use in documentation or consumer fixtures, and
 review changes to them for compatibility.
+
+Styling API documentation must enumerate the complete supported token and hook
+surface, use names that the released stylesheet actually consumes, and separate
+public configuration from derived or internal custom properties. For part hooks,
+document whether the hook belongs on a rendered leaf or may be placed on a
+wrapper, including which descendants the theme constrains.

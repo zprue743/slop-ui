@@ -32,7 +32,9 @@ ownership.
 
 ### Loading, empty, disabled, read-only, and error states
 
-Define behavior and precedence when states overlap.
+Define behavior and precedence when states overlap. For states that suppress
+activation, specify focus retention, pointer and keyboard behavior, native form
+behavior, accessible semantics, and transitions from an enabled focused state.
 
 ### Async behavior
 
@@ -64,7 +66,11 @@ Describe announcements and intended reading/interaction model.
 ## Rendering and customization
 
 Define simple configuration, callbacks, slots/rendering, lower-level primitives,
-and stable semantic styling hooks. Do not make internal wrapper nesting the API.
+and stable semantic styling hooks. For each visual-part hook, define whether it
+belongs on the rendered leaf or may be placed on a wrapper and which descendants
+the theme constrains. Define supported theme surfaces, color schemes, independent
+tone and treatment axes, and whether visual state changes preserve geometry and
+accessible content. Do not make internal wrapper nesting the API.
 
 ## Environment behavior
 
@@ -93,7 +99,8 @@ duplication.
 - Required Vue component tests
 - Required browser tests
 - Required accessibility and keyboard tests
-- Required compile-time/type inference tests
+- Required exported-component, native-attribute, generic, or inference type tests
+- Required theme contrast-matrix and state-geometry tests, when applicable
 - Required regression fixtures
 
 ## Documentation plan
