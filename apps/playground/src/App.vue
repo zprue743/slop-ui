@@ -5,6 +5,13 @@ import { Button } from '@slop-ui/vue'
 
 const activations = ref(0)
 const submissions = ref(0)
+const pendingActivations = ref(0)
+const isPending = ref(false)
+
+function startPending() {
+  pendingActivations.value += 1
+  isPending.value = true
+}
 </script>
 
 <template>
@@ -39,20 +46,23 @@ const submissions = ref(0)
             <div class="example">
               <span>Icon with text</span>
               <Button @click="activations += 1">
-                <svg data-slot="icon" aria-hidden="true" viewBox="0 0 16 16">
-                  <path d="M8 3v10M3 8h10" stroke="currentColor" />
-                </svg>
+                <span data-slot="icon">
+                  <svg aria-hidden="true" viewBox="0 0 16 16">
+                    <path d="M8 3v10M3 8h10" stroke="currentColor" />
+                  </svg>
+                </span>
                 Add item
               </Button>
             </div>
             <div class="example">
-              <span>Secondary</span>
+              <span>Neutral soft</span>
               <Button
-                data-variant="secondary"
+                data-variant="soft"
+                data-tone="neutral"
                 data-size="sm"
                 @click="activations += 1"
               >
-                Secondary action
+                Neutral action
               </Button>
             </div>
             <div class="example">
@@ -62,9 +72,9 @@ const submissions = ref(0)
               </Button>
             </div>
             <div class="example">
-              <span>Danger</span>
+              <span>Danger solid</span>
               <Button
-                data-variant="danger"
+                data-tone="danger"
                 data-size="lg"
                 @click="activations += 1"
               >
@@ -72,9 +82,38 @@ const submissions = ref(0)
               </Button>
             </div>
             <div class="example">
-              <span>Loading</span>
-              <Button loading @click="activations += 1">
-                Loading action
+              <span>Loading (activations: {{ pendingActivations }})</span>
+              <div class="examples">
+                <Button :loading="isPending" @click="startPending">
+                  Save changes
+                </Button>
+                <Button
+                  data-variant="ghost"
+                  data-tone="neutral"
+                  @click="isPending = false"
+                >
+                  Reset
+                </Button>
+              </div>
+            </div>
+            <div class="example">
+              <span>Custom loading indicator</span>
+              <Button loading>
+                <svg
+                  data-slot="loading-indicator"
+                  aria-hidden="true"
+                  viewBox="0 0 16 16"
+                >
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                </svg>
+                Publishing
               </Button>
             </div>
             <div class="example">

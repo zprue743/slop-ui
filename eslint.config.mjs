@@ -61,6 +61,13 @@ export default tseslint.config(
       'vue/block-lang': ['error', { script: { lang: 'ts' } }],
       'vue/component-api-style': ['error', ['script-setup']],
       'vue/multi-word-component-names': 'off',
+      // Native ARIA attributes are intentionally hyphenated when a public
+      // component prop type extends Vue's intrinsic element attributes.
+      'vue/prop-name-casing': [
+        'warn',
+        'camelCase',
+        { ignoreProps: ['/^aria-/'] },
+      ],
     },
   },
 )

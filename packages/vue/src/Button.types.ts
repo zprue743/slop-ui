@@ -1,8 +1,16 @@
+import type { ButtonHTMLAttributes } from 'vue'
+
 /** Valid values for the native button `type` attribute. */
 export type ButtonType = 'button' | 'submit' | 'reset'
 
-/** Public props for the {@link Button} component. */
-export interface ButtonProps {
+/**
+ * Public props for the {@link Button} component.
+ *
+ * Vue ignores the native base while generating runtime props so those values
+ * remain fallthrough attributes, while consumers still receive the complete
+ * native button type at development time.
+ */
+export interface ButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
   /**
    * Prevents activation and removes the button from sequential focus order.
    * @default false

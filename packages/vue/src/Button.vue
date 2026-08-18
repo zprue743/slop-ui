@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useTemplateRef } from 'vue'
+import { useTemplateRef } from 'vue'
 
 import type { ButtonExposed, ButtonProps } from './Button.types'
 
@@ -10,7 +10,16 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 })
 
 const element = useTemplateRef<HTMLButtonElement>('element')
-const isDisabled = computed(() => props.disabled || props.loading)
+
+function preventLoadingActivation(event: MouseEvent) {
+  if (!props.loading) return
+
+  // Loading remains focusable so async state changes do not discard the user's
+  // focus position. Capture-phase cancellation prevents consumer listeners and
+  // native form submission without simulating button keyboard behavior.
+  event.preventDefault()
+  event.stopImmediatePropagation()
+}
 
 defineExpose<ButtonExposed>({
   get element() {
@@ -30,9 +39,11 @@ defineExpose<ButtonExposed>({
     ref="element"
     class="slop-button"
     :type="type"
-    :disabled="isDisabled"
+    :disabled="disabled"
+    :aria-disabled="loading || undefined"
     :aria-busy="loading || undefined"
     :data-loading="loading ? '' : undefined"
+    @click.capture="preventLoadingActivation"
   >
     <slot />
   </button>

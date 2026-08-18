@@ -21,8 +21,15 @@ void focusButton
     ref="button"
     class="product-button"
     type="submit"
+    name="intent"
+    value="save"
+    form="settings-form"
+    formaction="/settings"
+    formmethod="post"
+    autofocus
     aria-label="Save changes"
-    data-variant="secondary"
+    data-variant="soft"
+    data-tone="neutral"
     @click="handleClick"
   />
 </template>

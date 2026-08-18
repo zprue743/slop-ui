@@ -25,11 +25,11 @@ native behavior is intended.
 
 ## API
 
-| Prop       | Type                              | Default    | Description                                           |
-| ---------- | --------------------------------- | ---------- | ----------------------------------------------------- |
-| `type`     | `'button' \| 'submit' \| 'reset'` | `'button'` | Selects native button behavior.                       |
-| `disabled` | `boolean`                         | `false`    | Disables activation and sequential focus.             |
-| `loading`  | `boolean`                         | `false`    | Disables duplicate activation and exposes busy state. |
+| Prop       | Type                              | Default    | Description                                                                   |
+| ---------- | --------------------------------- | ---------- | ----------------------------------------------------------------------------- |
+| `type`     | `'button' \| 'submit' \| 'reset'` | `'button'` | Selects native button behavior.                                               |
+| `disabled` | `boolean`                         | `false`    | Disables activation and sequential focus.                                     |
+| `loading`  | `boolean`                         | `false`    | Prevents duplicate activation while preserving focus and exposing busy state. |
 
 All native button attributes and event listeners fall through to the root
 button. The default slot is the only content slot.
@@ -62,10 +62,12 @@ headless even when the stylesheet is loaded. See the
 <Button disabled>Unavailable action</Button>
 ```
 
-Loading adds native `disabled`, `aria-busy="true"`, and the `data-loading`
-styling hook. Slot content remains rendered so the button keeps the same
-accessible name. The application still owns the asynchronous operation, errors,
-cancellation, and any success or failure announcement.
+Loading adds `aria-disabled="true"`, `aria-busy="true"`, and the `data-loading`
+styling hook. Activation is blocked while the native button remains focusable, so
+an action becoming pending does not discard the user's focus position. Slot
+content remains rendered so the button keeps the same accessible name. The
+application still owns the asynchronous operation, errors, cancellation, and any
+success or failure announcement.
 
 ## Icon-only actions
 
@@ -80,8 +82,9 @@ assistive technology.
 
 Text buttons normally receive their accessible name from the slot. You can also
 forward `aria-labelledby` or `aria-describedby` when the surrounding interface
-provides those relationships. The optional theme sizes only content marked with
-`data-slot="icon"`, so wrapped icon components remain under consumer control.
+provides those relationships. The optional theme sizes content marked with
+`data-slot="icon"` and constrains SVG descendants inside an explicitly marked
+wrapper.
 
 ## Component refs
 
@@ -109,10 +112,10 @@ unmount, `element` is `null` and the methods are safe no-ops.
 
 The component always renders a native `<button>` with the stable `slop-button`
 class, so enabled buttons retain
-native `Enter`, `Space`, pointer, touch, and focus behavior. Disabled and loading
-buttons use native disabled semantics. Without the optional default theme,
-consumers must provide visible focus indication, sufficient contrast, and an
-adequate touch target.
+native `Enter`, `Space`, pointer, touch, and focus behavior. Disabled buttons use
+native disabled semantics; loading buttons remain focusable while activation is
+suppressed. Without the optional default theme, consumers must provide visible
+focus indication, sufficient contrast, and an adequate touch target.
 
 SSR markup is deterministic from props and slot content, and setup does not read
 browser globals. No listeners, timers, or observers require cleanup.

@@ -1,45 +1,36 @@
 /*
  * Theme defaults live in a low-priority layer so ordinary consumer styles win
- * regardless of import order. Component-scoped tokens remain the preferred
- * override surface until multiple components justify shared visual tokens.
+ * regardless of import order. Every selector is zero-specificity, while public
+ * custom properties provide the stable theme configuration surface.
  */
 @layer slop-ui-theme {
   :where(.slop-theme) {
     color-scheme: light;
 
-    --slop-button-primary-background: #1d4ed8;
-    --slop-button-primary-background-hover: #1e40af;
-    --slop-button-primary-background-active: #1e3a8a;
-    --slop-button-primary-border-color: #1d4ed8;
-    --slop-button-primary-color: #ffffff;
-    --slop-button-secondary-background: #f8fafc;
-    --slop-button-secondary-background-hover: #f1f5f9;
-    --slop-button-secondary-background-active: #e2e8f0;
-    --slop-button-secondary-border-color: #cbd5e1;
-    --slop-button-secondary-color: #0f172a;
-    --slop-button-outline-background: transparent;
-    --slop-button-outline-background-hover: #eff6ff;
-    --slop-button-outline-background-active: #dbeafe;
-    --slop-button-outline-border-color: #1d4ed8;
-    --slop-button-outline-color: #1d4ed8;
-    --slop-button-ghost-background: transparent;
-    --slop-button-ghost-background-hover: #f1f5f9;
-    --slop-button-ghost-background-active: #e2e8f0;
-    --slop-button-ghost-border-color: transparent;
-    --slop-button-ghost-color: #0f172a;
-    --slop-button-danger-background: #b91c1c;
-    --slop-button-danger-background-hover: #991b1b;
-    --slop-button-danger-background-active: #7f1d1d;
-    --slop-button-danger-border-color: #b91c1c;
-    --slop-button-danger-color: #ffffff;
+    --slop-theme-surface: light-dark(#ffffff, #0f172a);
+    --slop-theme-color: light-dark(#0f172a, #f8fafc);
+    --slop-button-accent-color: light-dark(#1d4ed8, #60a5fa);
+    --slop-button-accent-color-hover: light-dark(#1e40af, #93c5fd);
+    --slop-button-accent-color-active: light-dark(#1e3a8a, #bfdbfe);
+    --slop-button-accent-contrast: light-dark(#ffffff, #0f172a);
+    --slop-button-neutral-color: light-dark(#334155, #cbd5e1);
+    --slop-button-neutral-color-hover: light-dark(#1e293b, #e2e8f0);
+    --slop-button-neutral-color-active: light-dark(#0f172a, #f1f5f9);
+    --slop-button-neutral-contrast: light-dark(#ffffff, #0f172a);
+    --slop-button-danger-color: light-dark(#b91c1c, #f87171);
+    --slop-button-danger-color-hover: light-dark(#991b1b, #fca5a5);
+    --slop-button-danger-color-active: light-dark(#7f1d1d, #fecaca);
+    --slop-button-danger-contrast: light-dark(#ffffff, #0f172a);
     --slop-button-disabled-opacity: 0.55;
-    --slop-button-focus-ring: #0f172a;
-    --slop-button-focus-ring-contrast: #ffffff;
+    --slop-button-focus-ring: light-dark(#0f172a, #ffffff);
+    --slop-button-focus-ring-contrast: light-dark(#ffffff, #0f172a);
     --slop-button-focus-ring-offset: 2px;
     --slop-button-focus-ring-width: 3px;
     --slop-button-font-weight: 600;
     --slop-button-gap: 0.5rem;
     --slop-button-icon-size: 1.1em;
+    --slop-button-loading-indicator-size: 1.1em;
+    --slop-button-loading-indicator-width: 2px;
     --slop-button-radius: 0.5rem;
     --slop-button-transition-duration: 120ms;
     --slop-button-size-sm-min-size: 2.25rem;
@@ -51,41 +42,29 @@
     --slop-button-size-lg-min-size: 3.25rem;
     --slop-button-size-lg-padding-block: 0.875rem;
     --slop-button-size-lg-padding-inline: 1.25rem;
+
+    background-color: var(--slop-theme-surface);
+    color: var(--slop-theme-color);
   }
 
   :where(.slop-theme[data-color-scheme='dark']) {
     color-scheme: dark;
+  }
 
-    --slop-button-primary-background: #3b82f6;
-    --slop-button-primary-background-hover: #2563eb;
-    --slop-button-primary-background-active: #1d4ed8;
-    --slop-button-primary-border-color: #3b82f6;
-    --slop-button-secondary-background: #1e293b;
-    --slop-button-secondary-background-hover: #334155;
-    --slop-button-secondary-background-active: #475569;
-    --slop-button-secondary-border-color: #475569;
-    --slop-button-secondary-color: #f8fafc;
-    --slop-button-outline-background-hover: #172554;
-    --slop-button-outline-background-active: #1e3a8a;
-    --slop-button-outline-border-color: #60a5fa;
-    --slop-button-outline-color: #bfdbfe;
-    --slop-button-ghost-background-hover: #1e293b;
-    --slop-button-ghost-background-active: #334155;
-    --slop-button-ghost-color: #f8fafc;
-    --slop-button-focus-ring: #ffffff;
-    --slop-button-focus-ring-contrast: #0f172a;
+  :where(.slop-theme[data-color-scheme='system']) {
+    color-scheme: light dark;
   }
 
   :where(.slop-theme .slop-button) {
-    --_slop-button-background: var(--slop-button-primary-background);
-    --_slop-button-background-active: var(
-      --slop-button-primary-background-active
-    );
-    --_slop-button-background-hover: var(
-      --slop-button-primary-background-hover
-    );
-    --_slop-button-border-color: var(--slop-button-primary-border-color);
-    --_slop-button-color: var(--slop-button-primary-color);
+    --_slop-button-tone-color: var(--slop-button-accent-color);
+    --_slop-button-tone-color-active: var(--slop-button-accent-color-active);
+    --_slop-button-tone-color-hover: var(--slop-button-accent-color-hover);
+    --_slop-button-tone-contrast: var(--slop-button-accent-contrast);
+    --_slop-button-background: var(--_slop-button-tone-color);
+    --_slop-button-background-active: var(--_slop-button-tone-color-active);
+    --_slop-button-background-hover: var(--_slop-button-tone-color-hover);
+    --_slop-button-border-color: var(--_slop-button-tone-color);
+    --_slop-button-color: var(--_slop-button-tone-contrast);
     --_slop-button-min-size: var(--slop-button-size-md-min-size);
     --_slop-button-padding-block: var(--slop-button-size-md-padding-block);
     --_slop-button-padding-inline: var(--slop-button-size-md-padding-inline);
@@ -107,6 +86,7 @@
     min-block-size: var(--_slop-button-min-size);
     padding-block: var(--_slop-button-padding-block);
     padding-inline: var(--_slop-button-padding-inline);
+    position: relative;
     transition:
       background-color var(--slop-button-transition-duration) ease,
       border-color var(--slop-button-transition-duration) ease,
@@ -114,48 +94,74 @@
       opacity var(--slop-button-transition-duration) ease;
   }
 
-  :where(.slop-theme .slop-button[data-variant='secondary']) {
-    --_slop-button-background: var(--slop-button-secondary-background);
-    --_slop-button-background-active: var(
-      --slop-button-secondary-background-active
+  :where(.slop-theme .slop-button[data-tone='neutral']) {
+    --_slop-button-tone-color: var(--slop-button-neutral-color);
+    --_slop-button-tone-color-active: var(--slop-button-neutral-color-active);
+    --_slop-button-tone-color-hover: var(--slop-button-neutral-color-hover);
+    --_slop-button-tone-contrast: var(--slop-button-neutral-contrast);
+  }
+
+  :where(.slop-theme .slop-button[data-tone='danger']) {
+    --_slop-button-tone-color: var(--slop-button-danger-color);
+    --_slop-button-tone-color-active: var(--slop-button-danger-color-active);
+    --_slop-button-tone-color-hover: var(--slop-button-danger-color-hover);
+    --_slop-button-tone-contrast: var(--slop-button-danger-contrast);
+  }
+
+  :where(.slop-theme .slop-button[data-variant='soft']) {
+    --_slop-button-background: color-mix(
+      in srgb,
+      var(--_slop-button-tone-color) 12%,
+      var(--slop-theme-surface)
     );
-    --_slop-button-background-hover: var(
-      --slop-button-secondary-background-hover
+    --_slop-button-background-active: color-mix(
+      in srgb,
+      var(--_slop-button-tone-color) 24%,
+      var(--slop-theme-surface)
     );
-    --_slop-button-border-color: var(--slop-button-secondary-border-color);
-    --_slop-button-color: var(--slop-button-secondary-color);
+    --_slop-button-background-hover: color-mix(
+      in srgb,
+      var(--_slop-button-tone-color) 18%,
+      var(--slop-theme-surface)
+    );
+    --_slop-button-border-color: color-mix(
+      in srgb,
+      var(--_slop-button-tone-color) 40%,
+      var(--slop-theme-surface)
+    );
+    --_slop-button-color: var(--_slop-button-tone-color);
   }
 
   :where(.slop-theme .slop-button[data-variant='outline']) {
-    --_slop-button-background: var(--slop-button-outline-background);
-    --_slop-button-background-active: var(
-      --slop-button-outline-background-active
+    --_slop-button-background: transparent;
+    --_slop-button-background-active: color-mix(
+      in srgb,
+      var(--_slop-button-tone-color) 18%,
+      var(--slop-theme-surface)
     );
-    --_slop-button-background-hover: var(
-      --slop-button-outline-background-hover
+    --_slop-button-background-hover: color-mix(
+      in srgb,
+      var(--_slop-button-tone-color) 10%,
+      var(--slop-theme-surface)
     );
-    --_slop-button-border-color: var(--slop-button-outline-border-color);
-    --_slop-button-color: var(--slop-button-outline-color);
+    --_slop-button-border-color: var(--_slop-button-tone-color);
+    --_slop-button-color: var(--_slop-button-tone-color);
   }
 
   :where(.slop-theme .slop-button[data-variant='ghost']) {
-    --_slop-button-background: var(--slop-button-ghost-background);
-    --_slop-button-background-active: var(
-      --slop-button-ghost-background-active
+    --_slop-button-background: transparent;
+    --_slop-button-background-active: color-mix(
+      in srgb,
+      var(--_slop-button-tone-color) 18%,
+      var(--slop-theme-surface)
     );
-    --_slop-button-background-hover: var(--slop-button-ghost-background-hover);
-    --_slop-button-border-color: var(--slop-button-ghost-border-color);
-    --_slop-button-color: var(--slop-button-ghost-color);
-  }
-
-  :where(.slop-theme .slop-button[data-variant='danger']) {
-    --_slop-button-background: var(--slop-button-danger-background);
-    --_slop-button-background-active: var(
-      --slop-button-danger-background-active
+    --_slop-button-background-hover: color-mix(
+      in srgb,
+      var(--_slop-button-tone-color) 10%,
+      var(--slop-theme-surface)
     );
-    --_slop-button-background-hover: var(--slop-button-danger-background-hover);
-    --_slop-button-border-color: var(--slop-button-danger-border-color);
-    --_slop-button-color: var(--slop-button-danger-color);
+    --_slop-button-border-color: transparent;
+    --_slop-button-color: var(--_slop-button-tone-color);
   }
 
   :where(.slop-theme .slop-button[data-size='sm']) {
@@ -170,11 +176,15 @@
     --_slop-button-padding-inline: var(--slop-button-size-lg-padding-inline);
   }
 
-  :where(.slop-theme .slop-button:hover:not(:disabled)) {
+  :where(
+    .slop-theme .slop-button:hover:not(:disabled):not([aria-disabled='true'])
+  ) {
     background-color: var(--_slop-button-background-hover);
   }
 
-  :where(.slop-theme .slop-button:active:not(:disabled)) {
+  :where(
+    .slop-theme .slop-button:active:not(:disabled):not([aria-disabled='true'])
+  ) {
     background-color: var(--_slop-button-background-active);
   }
 
@@ -186,25 +196,53 @@
     outline-offset: var(--slop-button-focus-ring-offset);
   }
 
-  :where(.slop-theme .slop-button:disabled) {
+  :where(.slop-theme .slop-button:is(:disabled, [aria-disabled='true'])) {
     cursor: not-allowed;
     opacity: var(--slop-button-disabled-opacity);
   }
 
   :where(.slop-theme .slop-button[data-loading]) {
+    color: transparent;
     cursor: wait;
   }
 
   :where(.slop-theme .slop-button[data-loading])::before {
     animation: slop-button-spin 800ms linear infinite;
-    block-size: var(--slop-button-icon-size);
-    border: 2px solid currentColor;
+    block-size: var(--slop-button-loading-indicator-size);
+    border: var(--slop-button-loading-indicator-width) solid
+      var(--_slop-button-color);
     border-inline-end-color: transparent;
     border-radius: 50%;
     box-sizing: border-box;
     content: '';
-    flex: none;
-    inline-size: var(--slop-button-icon-size);
+    inline-size: var(--slop-button-loading-indicator-size);
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+
+  :where(.slop-theme .slop-button [data-slot='loading-indicator']) {
+    display: none;
+  }
+
+  :where(
+    .slop-theme .slop-button[data-loading] [data-slot='loading-indicator']
+  ) {
+    block-size: var(--slop-button-loading-indicator-size);
+    color: var(--_slop-button-color);
+    display: block;
+    inline-size: var(--slop-button-loading-indicator-size);
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+
+  :where(
+    .slop-theme .slop-button[data-loading]:has([data-slot='loading-indicator'])
+  )::before {
+    content: none;
   }
 
   :where(.slop-theme .slop-button[data-block]) {
@@ -222,29 +260,10 @@
     inline-size: var(--slop-button-icon-size);
   }
 
-  @media (prefers-color-scheme: dark) {
-    :where(.slop-theme[data-color-scheme='system']) {
-      color-scheme: dark;
-
-      --slop-button-primary-background: #3b82f6;
-      --slop-button-primary-background-hover: #2563eb;
-      --slop-button-primary-background-active: #1d4ed8;
-      --slop-button-primary-border-color: #3b82f6;
-      --slop-button-secondary-background: #1e293b;
-      --slop-button-secondary-background-hover: #334155;
-      --slop-button-secondary-background-active: #475569;
-      --slop-button-secondary-border-color: #475569;
-      --slop-button-secondary-color: #f8fafc;
-      --slop-button-outline-background-hover: #172554;
-      --slop-button-outline-background-active: #1e3a8a;
-      --slop-button-outline-border-color: #60a5fa;
-      --slop-button-outline-color: #bfdbfe;
-      --slop-button-ghost-background-hover: #1e293b;
-      --slop-button-ghost-background-active: #334155;
-      --slop-button-ghost-color: #f8fafc;
-      --slop-button-focus-ring: #ffffff;
-      --slop-button-focus-ring-contrast: #0f172a;
-    }
+  :where(.slop-theme .slop-button [data-slot='icon'] svg) {
+    block-size: 100%;
+    display: block;
+    inline-size: 100%;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -259,15 +278,23 @@
 
   @media (forced-colors: active) {
     :where(.slop-theme .slop-button) {
+      --_slop-button-color: ButtonText;
+
       background-color: ButtonFace;
       border-color: ButtonText;
       color: ButtonText;
     }
 
-    :where(.slop-theme .slop-button:disabled) {
+    :where(.slop-theme .slop-button:is(:disabled, [aria-disabled='true'])) {
+      --_slop-button-color: GrayText;
+
       border-color: GrayText;
       color: GrayText;
       opacity: 1;
+    }
+
+    :where(.slop-theme .slop-button[data-loading]) {
+      color: transparent;
     }
 
     :where(.slop-theme .slop-button:focus-visible) {
@@ -276,14 +303,18 @@
     }
 
     :where(.slop-theme .slop-button[data-loading])::before {
-      border-color: ButtonText;
+      border-color: var(--_slop-button-color);
       border-inline-end-color: transparent;
     }
   }
 
   @keyframes slop-button-spin {
+    from {
+      transform: translate(-50%, -50%) rotate(0);
+    }
+
     to {
-      transform: rotate(1turn);
+      transform: translate(-50%, -50%) rotate(1turn);
     }
   }
 }

@@ -3,5 +3,6 @@
 ---
 
 Add an opt-in default Button theme with cascade-safe overrides, component tokens,
-variants, sizes, icon and loading treatments, light and dark color schemes,
-accessible focus and forced-colors behavior, and reduced-motion handling.
+composable variants and tones, sizes, stable loading geometry, explicit icon and
+indicator hooks, surface-aware color schemes, accessible focus and forced-colors
+behavior, and reduced-motion handling.

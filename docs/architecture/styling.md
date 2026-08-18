@@ -16,7 +16,9 @@ visual responsibility.
 Theme defaults live in a named low-priority cascade layer and use zero-specificity
 selectors so ordinary consumer CSS can override them independently of import
 order. Slotted visual parts use explicit `data-slot` hooks instead of depending
-on incidental child elements or wrapper structure.
+on incidental child elements or wrapper structure. Theme treatment axes such as
+solid or outline remain independent from semantic tone axes such as accent or
+danger, so consumers can compose them without a growing set of combined variants.
 
 Consumers must remain able to use normal CSS, utility CSS, CSS Modules, or another
 theme system. Headless semantics, focus behavior, and state must not depend on a

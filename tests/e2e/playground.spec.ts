@@ -1,7 +1,60 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
+import type { Locator } from '@playwright/test'
 
 import { startStaticServer } from './static-server'
+
+function parseColor(value: string) {
+  const channels = value.match(/[\d.]+/g)?.map(Number)
+  if (!channels || channels.length < 3) {
+    throw new Error(`Unsupported computed color: ${value}`)
+  }
+
+  if (value.startsWith('color(')) {
+    return channels.slice(-3).map((channel) => channel * 255)
+  }
+
+  return channels.slice(0, 3)
+}
+
+function luminance(value: string) {
+  const [red, green, blue] = parseColor(value).map((channel) => {
+    const normalized = channel / 255
+    return normalized <= 0.04045
+      ? normalized / 12.92
+      : ((normalized + 0.055) / 1.055) ** 2.4
+  })
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue
+}
+
+function contrast(first: string, second: string) {
+  const firstLuminance = luminance(first)
+  const secondLuminance = luminance(second)
+  return (
+    (Math.max(firstLuminance, secondLuminance) + 0.05) /
+    (Math.min(firstLuminance, secondLuminance) + 0.05)
+  )
+}
+
+async function textContrast(button: Locator, surface: Locator) {
+  const colors = await button.evaluate((element) => {
+    const style = getComputedStyle(element)
+    return {
+      background: style.backgroundColor,
+      color: style.color,
+    }
+  })
+  const surfaceBackground = await surface.evaluate(
+    (element) => getComputedStyle(element).backgroundColor,
+  )
+  const background =
+    colors.background === 'rgba(0, 0, 0, 0)'
+      ? surfaceBackground
+      : colors.background
+
+  return contrast(colors.color, background)
+}
 
 test('playground shell loads without detectable accessibility violations', async ({
   page,
@@ -46,20 +99,32 @@ test('Button supports native activation, focus, and unavailable states', async (
     await expect(page.getByText('Form submissions: 1')).toBeVisible()
 
     const disabled = page.getByRole('button', { name: 'Disabled action' })
-    const loading = page.getByRole('button', { name: 'Loading action' })
+    const loading = page.getByRole('button', { name: 'Publishing' })
     await expect(disabled).toBeDisabled()
-    await expect(loading).toBeDisabled()
+    await expect(loading).not.toHaveAttribute('disabled', '')
+    await expect(loading).toHaveAttribute('aria-disabled', 'true')
     await expect(loading).toHaveAttribute('aria-busy', 'true')
 
     const themedGroup = page.getByRole('group', { name: 'Default theme' })
     const themedAction = themedGroup.getByRole('button', { name: 'Add item' })
     await expect(themedAction).toHaveCSS('background-color', 'rgb(29, 78, 216)')
     await expect(themedAction.locator('[data-slot="icon"]')).toBeVisible()
+    const iconSizes = await themedAction
+      .locator('[data-slot="icon"]')
+      .evaluate((wrapper) => {
+        const icon = wrapper.querySelector('svg')
+        return {
+          icon: icon?.getBoundingClientRect().width,
+          wrapper: wrapper.getBoundingClientRect().width,
+        }
+      })
+    expect(iconSizes.icon).toBe(iconSizes.wrapper)
 
-    const secondary = themedGroup.getByRole('button', {
-      name: 'Secondary action',
+    const neutral = themedGroup.getByRole('button', {
+      name: 'Neutral action',
     })
-    await expect(secondary).toHaveCSS('background-color', 'rgb(248, 250, 252)')
+    await expect(neutral).toHaveAttribute('data-variant', 'soft')
+    await expect(neutral).toHaveAttribute('data-tone', 'neutral')
 
     const danger = themedGroup.getByRole('button', { name: 'Delete item' })
     await expect(danger).toHaveCSS('min-height', '52px')
@@ -76,6 +141,27 @@ test('Button supports native activation, focus, and unavailable states', async (
 
     await iconOnly.click()
     await expect(page.getByText('Activations: 3')).toBeVisible()
+
+    const pending = themedGroup.getByRole('button', { name: 'Save changes' })
+    const widthBeforeLoading = await pending.evaluate(
+      (element) => element.getBoundingClientRect().width,
+    )
+    await pending.focus()
+    await pending.click()
+    await expect(pending).toBeFocused()
+    await expect(pending).not.toHaveAttribute('disabled', '')
+    await expect(pending).toHaveAttribute('aria-disabled', 'true')
+    await expect(pending).toHaveAttribute('aria-busy', 'true')
+    await pending.evaluate((element) => {
+      const button = element as HTMLButtonElement
+      button.click()
+    })
+    await expect(page.getByText('Loading (activations: 1)')).toBeVisible()
+    expect(
+      await pending.evaluate(
+        (element) => element.getBoundingClientRect().width,
+      ),
+    ).toBe(widthBeforeLoading)
   } finally {
     await playground.close()
   }
@@ -91,9 +177,13 @@ test('default theme adapts to accessibility and color preferences', async ({
 
     const themedGroup = page.getByRole('group', { name: 'Default theme' })
     const action = themedGroup.getByRole('button', { name: 'Add item' })
-    const loading = themedGroup.getByRole('button', { name: 'Loading action' })
+    const loading = themedGroup.getByRole('button', { name: 'Save changes' })
+    await loading.click()
 
     await action.focus()
+    await page.keyboard.press('Tab')
+    await page.keyboard.press('Shift+Tab')
+    await expect(action).toBeFocused()
     await expect(action).toHaveCSS('outline-color', 'rgb(15, 23, 42)')
     await expect(action).toHaveCSS('box-shadow', /rgb\(255, 255, 255\)/)
 
@@ -103,6 +193,18 @@ test('default theme adapts to accessibility and color preferences', async ({
     })
     expect(animatedLoadingIndicator.content).not.toBe('none')
     expect(animatedLoadingIndicator.animationName).not.toBe('none')
+
+    const customLoading = themedGroup.getByRole('button', {
+      name: 'Publishing',
+    })
+    await expect(
+      customLoading.locator('[data-slot="loading-indicator"]'),
+    ).toBeVisible()
+    expect(
+      await customLoading.evaluate(
+        (element) => getComputedStyle(element, '::before').content,
+      ),
+    ).toBe('none')
 
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await expect(action).toHaveCSS('transition-duration', '0s')
@@ -116,7 +218,24 @@ test('default theme adapts to accessibility and color preferences', async ({
       element.setAttribute('data-color-scheme', 'dark')
     })
     await expect(themedGroup).toHaveCSS('color-scheme', 'dark')
-    await expect(action).toHaveCSS('background-color', 'rgb(59, 130, 246)')
+    await expect(themedGroup).toHaveCSS('background-color', 'rgb(15, 23, 42)')
+    await expect(action).toHaveCSS('background-color', 'rgb(96, 165, 250)')
+
+    for (const tone of ['accent', 'neutral', 'danger']) {
+      for (const variant of ['solid', 'soft', 'outline', 'ghost']) {
+        await action.evaluate(
+          (element, options) => {
+            element.setAttribute('data-tone', options.tone)
+            element.setAttribute('data-variant', options.variant)
+          },
+          { tone, variant },
+        )
+        expect(
+          await textContrast(action, themedGroup),
+          `${tone} ${variant} text contrast`,
+        ).toBeGreaterThanOrEqual(4.5)
+      }
+    }
 
     await page.emulateMedia({ forcedColors: 'active' })
     await action.focus()

@@ -21,7 +21,10 @@ describe('Button', () => {
       attrs: {
         'aria-describedby': 'save-help',
         class: 'action',
+        formaction: '/settings',
+        name: 'intent',
         onClick,
+        value: 'save',
       },
       slots: { default: 'Save' },
     })
@@ -30,22 +33,19 @@ describe('Button', () => {
     button.element.click()
 
     expect(button.attributes('aria-describedby')).toBe('save-help')
+    expect(button.attributes('formaction')).toBe('/settings')
+    expect(button.attributes('name')).toBe('intent')
+    expect(button.attributes('value')).toBe('save')
     expect(button.classes()).toContain('slop-button')
     expect(button.classes()).toContain('action')
     expect(onClick).toHaveBeenCalledOnce()
   })
 
-  it.each([
-    { state: 'disabled', props: { disabled: true } },
-    { state: 'loading', props: { loading: true } },
-  ])('prevents activation while $state', ({ state }) => {
+  it('prevents activation while disabled', () => {
     const onClick = vi.fn()
     const wrapper = mount(Button, {
       attrs: { onClick },
-      props: {
-        disabled: state === 'disabled',
-        loading: state === 'loading',
-      },
+      props: { disabled: true },
       slots: { default: 'Save' },
     })
 
@@ -56,6 +56,44 @@ describe('Button', () => {
     expect(onClick).not.toHaveBeenCalled()
   })
 
+  it('prevents loading activation without discarding focus', async () => {
+    const onClick = vi.fn()
+    const wrapper = mount(Button, {
+      attachTo: document.body,
+      attrs: { onClick },
+      slots: { default: 'Save' },
+    })
+    const button = wrapper.get('button')
+
+    button.element.focus()
+    await wrapper.setProps({ loading: true })
+    button.element.click()
+
+    expect(button.attributes()).not.toHaveProperty('disabled')
+    expect(button.attributes('aria-disabled')).toBe('true')
+    expect(document.activeElement).toBe(button.element)
+    expect(onClick).not.toHaveBeenCalled()
+    wrapper.unmount()
+  })
+
+  it('prevents native form submission while loading', () => {
+    const onSubmit = vi.fn((event: Event) => {
+      event.preventDefault()
+    })
+    const wrapper = mount({
+      setup() {
+        return () =>
+          h('form', { onSubmit }, [
+            h(Button, { loading: true, type: 'submit' }, () => 'Save'),
+          ])
+      },
+    })
+
+    wrapper.get('button').element.click()
+
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
   it('marks loading state without replacing the accessible content', () => {
     const wrapper = mount(Button, {
       props: { loading: true },
@@ -64,6 +102,7 @@ describe('Button', () => {
 
     const button = wrapper.get('button')
     expect(button.attributes('aria-busy')).toBe('true')
+    expect(button.attributes('aria-disabled')).toBe('true')
     expect(button.attributes()).toHaveProperty('data-loading')
     expect(button.text()).toBe('Save changes')
   })
