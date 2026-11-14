@@ -187,3 +187,20 @@ export {
   type GhostFieldExposed,
   type GhostFieldLabelAssociate,
 } from './ghost-field'
+export { GhostTooltip, type GhostTooltipSlotProps } from './ghost-tooltip'
+export {
+  GhostTooltipTrigger,
+  type GhostTooltipTriggerElement,
+  type GhostTooltipTriggerExposed,
+} from './ghost-tooltip-trigger'
+export {
+  GhostTooltipContent,
+  type GhostTooltipContentElement,
+  type GhostTooltipContentExposed,
+  type GhostTooltipFlipOptions,
+  type GhostTooltipOffsetOptions,
+  type GhostTooltipPlacement,
+  type GhostTooltipShiftOptions,
+  type GhostTooltipStrategy,
+  type GhostPortalTarget,
+} from './ghost-tooltip-content'
