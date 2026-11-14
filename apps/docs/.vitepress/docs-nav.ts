@@ -17,12 +17,12 @@ export const docsSidebar: LlmsSidebarGroup[] = [
   {
     text: 'Components',
     items: [
-      { text: 'GhostCollapsible', link: '/components/collapsible' },
-      { text: 'GhostField', link: '/components/field' },
       { text: 'GhostBadge', link: '/components/badge' },
+      { text: 'GhostCollapsible', link: '/components/collapsible' },
       { text: 'GhostButton', link: '/components/button' },
       { text: 'GhostCheckbox', link: '/components/checkbox' },
       { text: 'GhostDialog', link: '/components/dialog' },
+      { text: 'GhostField', link: '/components/field' },
       { text: 'GhostInput', link: '/components/input' },
       {
         text: 'GhostInteractiveSurface',
@@ -36,6 +36,7 @@ export const docsSidebar: LlmsSidebarGroup[] = [
       { text: 'GhostSpinner', link: '/components/spinner' },
       { text: 'GhostSwitch', link: '/components/switch' },
       { text: 'GhostTextarea', link: '/components/textarea' },
+      { text: 'GhostTooltip', link: '/components/tooltip' },
       { text: 'GhostVisuallyHidden', link: '/components/visually-hidden' },
       { text: 'Default theme', link: '/themes/default' },
       {
@@ -105,6 +106,7 @@ export const docsSidebar: LlmsSidebarGroup[] = [
         link: '/components/collapsible-spec',
       },
       { text: 'GhostField specification', link: '/components/field-spec' },
+      { text: 'GhostTooltip specification', link: '/components/tooltip-spec' },
       { text: 'Workflow', link: '/contributing/workflow' },
       {
         text: 'Component verification',

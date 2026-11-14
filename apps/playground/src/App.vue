@@ -24,6 +24,7 @@ import MotionReference from './MotionReference.vue'
 import OverlayReference from './OverlayReference.vue'
 import CollapsibleReference from './CollapsibleReference.vue'
 import PopoverReference from './PopoverReference.vue'
+import TooltipReference from './TooltipReference.vue'
 import VisualReference from './VisualReference.vue'
 import {
   GhostBadge,
@@ -247,6 +248,7 @@ function submitPlaygroundComment(event: Event): void {
     <OverlayReference />
     <PopoverReference />
     <CollapsibleReference />
+    <TooltipReference />
     <DialogReference />
     <ModalPrimitivesReference />
 
